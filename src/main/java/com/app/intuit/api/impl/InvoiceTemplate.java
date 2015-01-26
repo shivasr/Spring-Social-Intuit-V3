@@ -10,7 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.app.intuit.api.InvoiceOperations;
 import com.app.intuit.domain.QBInvoice;
-import com.app.intuit.util.QBToFMMapperUtilities;
+import com.app.intuit.util.QBUtilities;
 import com.intuit.ipp.data.IntuitEntity;
 import com.intuit.ipp.data.IntuitResponse;
 import com.intuit.ipp.data.Invoice;
@@ -39,7 +39,7 @@ public class InvoiceTemplate implements InvoiceOperations {
 		if(response != null){
 			Invoice invoice = null;
 			invoice = (Invoice) response.getIntuitObject().getValue();
-			qbInvoice = QBToFMMapperUtilities.convertToQBInvoice(invoice);
+			qbInvoice = QBUtilities.convertToQBInvoice(invoice);
 			return qbInvoice;
 		}
 		return null;
@@ -56,7 +56,7 @@ public class InvoiceTemplate implements InvoiceOperations {
 			List<QBInvoice> invoices = new ArrayList<QBInvoice>(intuitObjects.size());
 			for(JAXBElement<? extends IntuitEntity> element: intuitObjects){
 				Invoice invoice = (Invoice) element.getValue();
-				QBInvoice qbInvoice = QBToFMMapperUtilities.convertToQBInvoice(invoice);
+				QBInvoice qbInvoice = QBUtilities.convertToQBInvoice(invoice);
 				invoices.add(qbInvoice);
 			}
 			return invoices;
@@ -71,7 +71,7 @@ public class InvoiceTemplate implements InvoiceOperations {
 		IntuitResponse response = restTemplate.postForObject("{baseURL}/v3/company/{companyId}/invoice?operation=update", qbInvoice1, IntuitResponse.class, baseUrl, companyId);
 		if(response != null){
 			Invoice invoice = (Invoice) response.getIntuitObject().getValue();
-			qbInvoice = QBToFMMapperUtilities.convertToQBInvoice(invoice);
+			qbInvoice = QBUtilities.convertToQBInvoice(invoice);
 			return qbInvoice;
 		}
 		return null;
@@ -83,7 +83,7 @@ public class InvoiceTemplate implements InvoiceOperations {
 		IntuitResponse response = restTemplate.postForObject("{baseURL}/v3/company/{companyId}/invoice", qbInvoice1, IntuitResponse.class, baseUrl, companyId);
 		if(response != null){
 			Invoice invoice = (Invoice) response.getIntuitObject().getValue();
-			qbInvoice = QBToFMMapperUtilities.convertToQBInvoice(invoice);
+			qbInvoice = QBUtilities.convertToQBInvoice(invoice);
 			return qbInvoice;
 		}
 		return null;

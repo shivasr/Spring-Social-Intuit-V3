@@ -2,9 +2,9 @@ package com.app.intuit.api.test;
 
 import org.junit.Assert;
 
-import com.app.intuit.api.IntuitProperties;
 import com.app.intuit.api.impl.IntuitTemplate;
 import com.app.intuit.domain.QBInvoice;
+import com.app.intuit.util.QBUtilities;
 
 public class InvoiceTemplateTest {
 	
@@ -14,40 +14,7 @@ public class InvoiceTemplateTest {
 		
 	}
 	public void setUp() throws Exception {
-		IntuitProperties properties = new IntuitProperties() {
-			
-			@Override
-			public String getConsumerSecret() {
-				return "Xc1KwMyDCd7HIGPNm6YZKcYENIBx5dyuH301fcMw";
-			}
-			
-			@Override
-			public String getConsumerKey() {
-				return "qyprd1vHWzip1M4AaWYDUI058XlO8F";
-			}
-			
-			@Override
-			public String getCompanyId() {
-				return "1315187735";
-			}
-			
-			@Override
-			public String getAccessTokenSecret() {
-				return "ZUtaXR1ircDRSvOEdRpAqLmakcfQKX7Gy5DBGw20";
-			}
-			
-			@Override
-			public String getAccessToken() {
-				return "qyprd7cHHUByyxm2w7S2UDlIp4PVKEECPfHgeh9glC5DECGm";
-			}
-
-			@Override
-			public String getBaseUrl() {
-				return "https://sandbox-quickbooks.api.intuit.com";
-			}
-		};
-		
-		intuit = new IntuitTemplate(properties);
+		intuit = QBUtilities.buildIntuit();
 	}
 	
 	public final void testGetInvoice(){

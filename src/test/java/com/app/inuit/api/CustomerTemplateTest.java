@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.app.intuit.api.IntuitProperties;
 import com.app.intuit.api.impl.IntuitTemplate;
 import com.app.intuit.domain.QbCustomer;
+import com.app.intuit.util.QBUtilities;
 
 /**
  * @author shiva
@@ -26,40 +27,7 @@ public class CustomerTemplateTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		IntuitProperties properties = new IntuitProperties() {
-			
-			@Override
-			public String getConsumerSecret() {
-				return "Xc1KwMyDCd7HIGPNm6YZKcYENIBx5dyuH301fcMw";
-			}
-			
-			@Override
-			public String getConsumerKey() {
-				return "qyprd1vHWzip1M4AaWYDUI058XlO8F";
-			}
-			
-			@Override
-			public String getCompanyId() {
-				return "1315187735";
-			}
-			
-			@Override
-			public String getAccessTokenSecret() {
-				return "o7AKwbZupJk1SqYvbMdkaTHjwohIvDxmrhOzazaE";
-			}
-			
-			@Override
-			public String getAccessToken() {
-				return "qyprdx7C2oRnVNHT3BHpRd2127ytk5sUFnKxJVs6oT7mzHXW";
-			}
-
-			@Override
-			public String getBaseUrl() {
-				return "https://sandbox-quickbooks.api.intuit.com";
-			}
-		};
-		
-		intuit = new IntuitTemplate(properties);
+		intuit = QBUtilities.buildIntuit();
 	}
 
 	/**

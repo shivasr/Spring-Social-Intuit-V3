@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.app.intuit.api.CustomerOperations;
 import com.app.intuit.domain.QbCustomer;
-import com.app.intuit.util.QBToFMMapperUtilities;
+import com.app.intuit.util.QBUtilities;
 import com.intuit.ipp.data.Customer;
 import com.intuit.ipp.data.IntuitEntity;
 import com.intuit.ipp.data.IntuitResponse;
@@ -44,7 +44,7 @@ public class CustomerTemplate implements CustomerOperations {
 		if(response != null){
 			Customer customer = null;
 			customer = (Customer) response.getIntuitObject().getValue();
-			qbCustomer = QBToFMMapperUtilities.convertToQbCustomer(customer);
+			qbCustomer = QBUtilities.convertToQbCustomer(customer);
 			return qbCustomer;
 		}
 		return null;
@@ -63,7 +63,7 @@ public class CustomerTemplate implements CustomerOperations {
 			List<QbCustomer> customers = new ArrayList<QbCustomer>(intuitObjects.size());
 			for(JAXBElement<? extends IntuitEntity> element: intuitObjects){
 				Customer customer = (Customer) element.getValue();
-				QbCustomer qbCustomer = QBToFMMapperUtilities.convertToQbCustomer(customer);
+				QbCustomer qbCustomer = QBUtilities.convertToQbCustomer(customer);
 				customers.add(qbCustomer);
 			}
 			return customers;
@@ -80,7 +80,7 @@ public class CustomerTemplate implements CustomerOperations {
 		IntuitResponse response = restTemplate.postForObject("{baseURL}/v3/company/{companyId}/customer?operation=update", sparseCustomer, IntuitResponse.class, baseUrl, companyId);
 		if(response != null){
 			Customer customer = (Customer) response.getIntuitObject().getValue();
-			qbCustomer = QBToFMMapperUtilities.convertToQbCustomer(customer);
+			qbCustomer = QBUtilities.convertToQbCustomer(customer);
 			return qbCustomer;
 		}
 		
@@ -95,7 +95,7 @@ public class CustomerTemplate implements CustomerOperations {
 		IntuitResponse response = restTemplate.postForObject("{baseURL}/v3/company/{companyId}/customer", sparseCustomer, IntuitResponse.class, baseUrl, companyId);
 		if(response != null){
 			Customer customer = (Customer) response.getIntuitObject().getValue();
-			QbCustomer qbCustomer = QBToFMMapperUtilities.convertToQbCustomer(customer);
+			QbCustomer qbCustomer = QBUtilities.convertToQbCustomer(customer);
 			return qbCustomer;
 		}
 		
