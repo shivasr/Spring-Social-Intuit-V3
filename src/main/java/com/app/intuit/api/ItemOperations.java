@@ -2,22 +2,24 @@ package com.app.intuit.api;
 
 import java.util.List;
 
-import com.intuit.ipp.data.Item;
+import com.app.intuit.domain.QBItem;
 
 
 public interface ItemOperations {
 	
-	public Item getItem(Long id);
-	public List<Item> getItems();
-	public Item update(Item Item);
-	public Item create(Item Item);
+	public QBItem getItem(String id);
+	public List<QBItem> getItems();
+	public QBItem update(QBItem item);
+	public QBItem create(QBItem item);
 	/**
 	 * Depending on if there is a idType create or update is called. Essentially
 	 * a wrapper around create and update to hide the logic.
 	 * @param item Item item to be persisted to Intuit.
 	 * @return Saved Intuit object containing the idType of saved Intuit item.
 	 */
-	public Item save(Item item);	
-	public boolean delete(Item Item);
+	public QBItem save(QBItem item);	
+	public boolean delete(QBItem Item);
+	//QBItem save(QBItem item);
+	
 
 }

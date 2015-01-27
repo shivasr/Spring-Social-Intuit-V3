@@ -23,5 +23,8 @@ public interface Intuit extends ApiBinding {
 	InvoiceOperations invoiceOperations();
 	
 	ItemOperations itemOperations();
+	
+	VendorOperations vendorOperations();
+	
 
 }

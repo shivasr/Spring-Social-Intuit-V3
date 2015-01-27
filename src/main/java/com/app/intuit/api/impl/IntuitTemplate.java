@@ -30,6 +30,7 @@ import com.app.intuit.api.ItemOperations;
 import com.app.intuit.api.PaymentMethodOperations;
 import com.app.intuit.api.PaymentOperations;
 import com.app.intuit.api.UserOperations;
+import com.app.intuit.api.VendorOperations;
 
 public class IntuitTemplate extends AbstractOAuth1ApiBinding implements Intuit {
 	
@@ -43,6 +44,7 @@ public class IntuitTemplate extends AbstractOAuth1ApiBinding implements Intuit {
 	private PaymentMethodOperations paymentMethodOperations;
 	private InvoiceOperations invoiceOperations;
 	private ItemOperations itemOperations;
+	private VendorOperations vendorOperations;
 	
 	private String companyId;
 	private static final String BASE_URL = "https://qbo.sbfinance.intuit.com";	 
@@ -76,10 +78,11 @@ public class IntuitTemplate extends AbstractOAuth1ApiBinding implements Intuit {
 			accountOperations = new AccountTemplate(isAuthorized(), getRestTemplate(), companyId, baseUrl);
 			customerOperations = new CustomerTemplate(isAuthorized(), getRestTemplate(), companyId, baseUrl);
 			invoiceOperations = new InvoiceTemplate(isAuthorized(), getRestTemplate(), companyId, baseUrl);
+			vendorOperations = new VendorTemplate(isAuthorized(),getRestTemplate(), companyId, baseUrl);
 			/*paymentOperations = new PaymentTemplate(isAuthorized(), getRestTemplate(), companyId, BASE_URL);
-			paymentMethodOperations = new PaymentMethodTemplate(isAuthorized(), getRestTemplate(), companyId, BASE_URL);
+			paymentMethodOperations = new PaymentMethodTemplate(isAuthorized(), getRestTemplate(), companyId, BASE_URL);*/
 			
-			itemOperations = new ItemTemplate(isAuthorized(), getRestTemplate(), companyId, BASE_URL); */
+			itemOperations = new ItemTemplate(isAuthorized(), getRestTemplate(), companyId, baseUrl); 
 		}
 	}
 
@@ -123,6 +126,10 @@ public class IntuitTemplate extends AbstractOAuth1ApiBinding implements Intuit {
 		return itemOperations;
 	}
 	
+	public VendorOperations vendorOperations(){
+		initSubApis();
+		return vendorOperations;
+	}
 	protected void configureRestTemplate(RestTemplate restTemplate) {
 		restTemplate.setErrorHandler(new ResponseErrorHandler() {
 					

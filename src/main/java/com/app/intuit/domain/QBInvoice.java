@@ -59,7 +59,7 @@ public class QBInvoice {
 	final private String xmlns = "http://schema.intuit.com/finance/v3";
 	
 	private String domain = "QBO";
-	private Boolean sparse = false;
+	private boolean sparse = false;
 	private Long id ;
 	private int syncToken;
 	private Long docNumber;
@@ -84,10 +84,10 @@ public class QBInvoice {
 	}
 	
 	@XmlAttribute(name="sparse")
-	public Boolean getSparse() {
+	public boolean getSparse() {
 		return sparse;
 	}
-	public void setSparse(Boolean sparse) {
+	public void setSparse(boolean sparse) {
 		this.sparse = sparse;
 	}
 	

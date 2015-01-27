@@ -14,10 +14,14 @@ import com.app.intuit.domain.ItemRef;
 import com.app.intuit.domain.Line;
 import com.app.intuit.domain.PhysicalAddress;
 import com.app.intuit.domain.QBInvoice;
+import com.app.intuit.domain.QBItem;
+import com.app.intuit.domain.QBItem.ItemTypeEnum;
+import com.app.intuit.domain.QBVendor;
 import com.app.intuit.domain.QbCustomer;
 import com.app.intuit.domain.SalesItemLineDetail;
 import com.app.intuit.domain.SubTotalLineDetail;
 import com.app.intuit.domain.TelephoneNumber;
+import com.app.intuit.domain.WebAddress;
 import com.intuit.ipp.data.LineDetailTypeEnum;
 import com.intuit.ipp.data.ReferenceType;
 
@@ -79,31 +83,19 @@ public class QBUtilities {
 		qbCustomer.setGivenName(customer.getGivenName());
 		qbCustomer.setId(customer.getId());
 		qbCustomer.setMiddleName(customer.getMiddleName());
-		
 		qbCustomer.setAlternatePhone(new TelephoneNumber(customer.getAlternatePhone()));
 		qbCustomer.setBillAddr(new PhysicalAddress(customer.getBillAddr()));
-		
-		
 		qbCustomer.setPrimaryPhone(new TelephoneNumber(customer.getPrimaryPhone()));
 		qbCustomer.setPrimaryEmailAddr(new EmailAddress(customer.getPrimaryEmailAddr()));
 		qbCustomer.setFax(new TelephoneNumber(customer.getFax()));
 		qbCustomer.setMobile(new TelephoneNumber(customer.getMobile()));
-		
 		qbCustomer.setSyncToken(Integer.valueOf(customer.getSyncToken()));
 		
-		
 		return qbCustomer;
-		
 	}
 	
 	public static QBInvoice convertToQBInvoice(com.intuit.ipp.data.Invoice invoice) {
 		QBInvoice qbInvoice = new QBInvoice();
-		//qbInvoice.setActive(invoice.isActive());
-//		qbInvoice.setCompanyName(invoice.getCompanyName());
-//		qbInvoice.setFamilyName(invoice.getFamilyName());
-//		qbInvoice.setGivenName(invoice.getGivenName());
-//		qbInvoice.setId(invoice.getId());
-//		qbInvoice.setMiddleName(invoice.getMiddleName());
 		qbInvoice.setId(Long.valueOf(invoice.getId()));
 		qbInvoice.setDomain(invoice.getDomain());
 		qbInvoice.setBalance(invoice.getBalance().doubleValue());
@@ -137,7 +129,8 @@ public class QBUtilities {
 				line.setLineNum(lineNum.longValue());
 			
 			line.setDetailType(qbLine.getDetailType().name());
-			line.setDescription(qbLine.getDescription());
+			
+		//	if(enum)
 			
 			BigDecimal amoungBigDecimal = qbLine.getAmount();
 			
@@ -165,20 +158,6 @@ public class QBUtilities {
 					subTotalLineItem.setServiceDate(serviceDate);
 			}
 		}
-		
-	
-//		qbCustomer.setAlternatePhone(new TelephoneNumber(customer.getAlternatePhone()));
-//		qbCustomer.setBillAddr(new PhysicalAddress(customer.getBillAddr()));
-//		
-//		
-//		qbCustomer.setPrimaryPhone(new TelephoneNumber(customer.getPrimaryPhone()));
-//		qbCustomer.setPrimaryEmailAddr(new EmailAddress(customer.getPrimaryEmailAddr()));
-//		qbCustomer.setFax(new TelephoneNumber(customer.getFax()));
-//		qbCustomer.setMobile(new TelephoneNumber(customer.getMobile()));
-//		
-//		qbCustomer.setSyncToken(Integer.valueOf(customer.getSyncToken()));
-		
-		
 		return qbInvoice;
 		
 	}
@@ -198,5 +177,55 @@ public class QBUtilities {
 		if(unitPriceBig != null)
 			salesItemLineDetail.setUnitPrice(unitPriceBig.doubleValue());
 		return salesItemLineDetail;
+	}
+
+	public static QBVendor convertToQBVendor(com.intuit.ipp.data.Vendor vendor) {
+		
+		QBVendor qbVendor = new QBVendor();
+		
+		qbVendor.setAcctNum(vendor.getAcctNum());
+		qbVendor.setActive(vendor.isActive());
+		qbVendor.setBalance(vendor.getBalance());
+		qbVendor.setBillAddr(new PhysicalAddress(vendor.getBillAddr()));
+		qbVendor.setCompanyName(vendor.getCompanyName());
+		qbVendor.setDisplayName(vendor.getDisplayName());
+		qbVendor.setFamilyName(vendor.getFamilyName());
+		qbVendor.setGivenName(vendor.getGivenName());
+		qbVendor.setId(vendor.getId());
+		qbVendor.setPrimaryEmailAddr(new EmailAddress(vendor.getPrimaryEmailAddr()));
+		qbVendor.setPrimaryPhone(new TelephoneNumber(vendor.getPrimaryPhone()));
+		qbVendor.setPrintOnCheckName(vendor.getPrintOnCheckName());
+		qbVendor.setWebAddress(new WebAddress(vendor.getWebAddr()));
+		qbVendor.setSyncToken(vendor.getSyncToken());
+		
+		return qbVendor;
+	}
+
+	public static QBItem convertToQBItem(com.intuit.ipp.data.Item item) {
+		QBItem qbItem = new QBItem();
+		qbItem.setDomain(qbItem.getDomain());
+		qbItem.setSparse(item.isSparse());
+		qbItem.setId(item.getId());
+		qbItem.setDecription(item.getDescription());
+		qbItem.setName(item.getName());
+		qbItem.setSyncToken(item.getSyncToken());
+		qbItem.setTaxable(item.isTaxable());
+		qbItem.setQtyOnHand(item.getQtyOnHand());
+		if(com.intuit.ipp.data.ItemTypeEnum.SERVICE==item.getType())
+		{
+			qbItem.setItemType(ItemTypeEnum.SERVICE);
+		}
+		else
+		{
+			qbItem.setItemType(ItemTypeEnum.INVENTORY);
+		}
+		//qbItem.setItemType();
+		
+		qbItem.setInvStartDate(item.getInvStartDate());
+		qbItem.setActive(item.isActive());
+		qbItem.setTrackQtyOnHand(item.isTrackQtyOnHand());
+		qbItem.setUnitPrice(item.getUnitPrice());
+		
+		return qbItem;
 	}
 }
