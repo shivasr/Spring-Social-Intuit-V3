@@ -7,8 +7,10 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Vendor")
-@XmlType(propOrder={"domain","sparse","id","syncToken","givenName","familyName","companyName","displayName","printOnCheckName","active","primaryPhone","webAddress","primaryEmailAddr","billAddr","balance","acctNum"})
+@XmlType(propOrder={"xmlns","domain","sparse","id","syncToken","givenName","familyName","companyName","displayName","printOnCheckName","active","primaryPhone","webAddress","primaryEmailAddr","billAddr","balance","acctNum"})
 public class QBVendor {
+	
+	final private String xmlns = "http://schema.intuit.com/finance/v3";
 	private String id;
 	private String syncToken;
 	private String givenName;
@@ -27,6 +29,11 @@ public class QBVendor {
 	private boolean sparse = false;
 	
 	
+	@XmlAttribute(name = "xmlns")
+	public String getXmlns() {
+		return xmlns;
+	}
+
 	@XmlAttribute(name = "domain")
 	public String getDomain() {
 		return domain;

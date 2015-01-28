@@ -3,7 +3,6 @@ package com.app.intuit.api.test;
 
 import org.junit.Assert;
 
-import com.app.intuit.api.IntuitProperties;
 import com.app.intuit.api.impl.IntuitTemplate;
 import com.app.intuit.domain.QbCustomer;
 import com.app.intuit.util.QBUtilities;

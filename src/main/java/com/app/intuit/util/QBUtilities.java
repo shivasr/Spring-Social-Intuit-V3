@@ -195,6 +195,7 @@ public class QBUtilities {
 		qbVendor.setPrimaryEmailAddr(new EmailAddress(vendor.getPrimaryEmailAddr()));
 		qbVendor.setPrimaryPhone(new TelephoneNumber(vendor.getPrimaryPhone()));
 		qbVendor.setPrintOnCheckName(vendor.getPrintOnCheckName());
+		if(vendor.getWebAddr()!=null)
 		qbVendor.setWebAddress(new WebAddress(vendor.getWebAddr()));
 		qbVendor.setSyncToken(vendor.getSyncToken());
 		
@@ -206,7 +207,7 @@ public class QBUtilities {
 		qbItem.setDomain(qbItem.getDomain());
 		qbItem.setSparse(item.isSparse());
 		qbItem.setId(item.getId());
-		qbItem.setDecription(item.getDescription());
+		qbItem.setDescription(item.getDescription());
 		qbItem.setName(item.getName());
 		qbItem.setSyncToken(item.getSyncToken());
 		qbItem.setTaxable(item.isTaxable());

@@ -20,6 +20,8 @@ public interface ItemOperations {
 	public QBItem save(QBItem item);	
 	public boolean delete(QBItem Item);
 	//QBItem save(QBItem item);
+	public List<QBItem> getIventoryItems();
+	public List<QBItem> getServiceItems();
 	
 
 }

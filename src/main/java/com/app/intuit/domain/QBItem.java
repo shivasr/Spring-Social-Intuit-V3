@@ -9,8 +9,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "Item")
-@XmlType(propOrder={"Domain","Sparse","Id","SyncToken","Name","Description","Active","Taxable","UnitPrice","TrackQtyOnHand","InvStartDate","QtyOnHand"})
+@XmlType(propOrder={"domain", "xmlns","sparse","id","syncToken","name","description","active","taxable","unitPrice","itemType","trackQtyOnHand","invStartDate","qtyOnHand"})
 public class QBItem {
+	
+	final private String xmlns = "http://schema.intuit.com/finance/v3";
 	public enum ItemTypeEnum{INVENTORY,SERVICE};
 	ItemTypeEnum itemType;
 	private String domain = "QBO";
@@ -19,7 +21,7 @@ public class QBItem {
 	private String id;
 	private String syncToken;
 	private String name;
-	private String decription;
+	private String description;
 	private boolean active;
 	private boolean taxable;
 	private BigDecimal unitPrice;
@@ -27,7 +29,11 @@ public class QBItem {
 	private Date invStartDate;
 	private BigDecimal qtyOnHand;
 	
-	
+	@XmlAttribute(name = "xmlns")
+	public String getXmlns() {
+		return xmlns;
+	}
+	@XmlElement(name = "Type")
 	public ItemTypeEnum getItemType() {
 		return itemType;
 	}
@@ -35,7 +41,7 @@ public class QBItem {
 		this.itemType = itemType;
 	}
 	
-	@XmlAttribute(name = "Doamin")
+	@XmlAttribute(name = "domain")
 	public String getDomain() {
 		return domain;
 	}
@@ -43,7 +49,7 @@ public class QBItem {
 		this.domain = domain;
 	}
 	
-	@XmlAttribute(name = "Sparse")
+	@XmlAttribute(name = "sparse")
 	public boolean isSparse() {
 		return sparse;
 	}
@@ -76,11 +82,11 @@ public class QBItem {
 	}
 	
 	@XmlElement(name = "Description")
-	public String getDecription() {
-		return decription;
+	public String getDescription() {
+		return description;
 	}
-	public void setDecription(String decription) {
-		this.decription = decription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	@XmlElement(name = "Active")

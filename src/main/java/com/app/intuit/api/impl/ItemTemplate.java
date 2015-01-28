@@ -11,13 +11,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.app.intuit.api.ItemOperations;
 import com.app.intuit.domain.QBItem;
-import com.app.intuit.domain.QBVendor;
 import com.app.intuit.util.QBUtilities;
 import com.intuit.ipp.data.IntuitEntity;
 import com.intuit.ipp.data.IntuitResponse;
 import com.intuit.ipp.data.Item;
 import com.intuit.ipp.data.QueryResponse;
-import com.intuit.ipp.data.Vendor;
 
 public class ItemTemplate implements ItemOperations{
 
@@ -57,7 +55,49 @@ public class ItemTemplate implements ItemOperations{
 		// TODO Auto-generated method stub
 		
 		requireAuthorization();		
-		IntuitResponse response = restTemplate.getForObject("{baseURL}/v3/company/{companyId}/query?query=select * from item", IntuitResponse.class, baseUrl, companyId);
+		IntuitResponse response = restTemplate.getForObject("{baseURL}/v3/company/{companyId}/query?query=select * from Item", IntuitResponse.class, baseUrl, companyId);
+		if(response != null){
+			QueryResponse queryResponse = response.getQueryResponse();
+			List<JAXBElement<? extends IntuitEntity>> intuitObjects = queryResponse.getIntuitObject();
+			
+			List<QBItem> items = new ArrayList<QBItem>(intuitObjects.size());
+			for(JAXBElement<? extends IntuitEntity> element: intuitObjects){
+				Item item = (Item) element.getValue();
+				QBItem qbItem = QBUtilities.convertToQBItem(item);
+				items.add(qbItem);
+			}
+			return items;
+		}
+		return null;
+	}
+	
+	@Override
+	public List<QBItem> getServiceItems() {
+		// TODO Auto-generated method stub
+		
+		requireAuthorization();		
+		IntuitResponse response = restTemplate.getForObject("{baseURL}/v3/company/{companyId}/query?query=select * from Item Where Type='Service'", IntuitResponse.class, baseUrl, companyId);
+		if(response != null){
+			QueryResponse queryResponse = response.getQueryResponse();
+			List<JAXBElement<? extends IntuitEntity>> intuitObjects = queryResponse.getIntuitObject();
+			
+			List<QBItem> items = new ArrayList<QBItem>(intuitObjects.size());
+			for(JAXBElement<? extends IntuitEntity> element: intuitObjects){
+				Item item = (Item) element.getValue();
+				QBItem qbItem = QBUtilities.convertToQBItem(item);
+				items.add(qbItem);
+			}
+			return items;
+		}
+		return null;
+	}
+	
+	@Override
+	public List<QBItem> getIventoryItems() {
+		// TODO Auto-generated method stub
+		
+		requireAuthorization();		
+		IntuitResponse response = restTemplate.getForObject("{baseURL}/v3/company/{companyId}/query?query=select * from Item Where Type='Inventory'", IntuitResponse.class, baseUrl, companyId);
 		if(response != null){
 			QueryResponse queryResponse = response.getQueryResponse();
 			List<JAXBElement<? extends IntuitEntity>> intuitObjects = queryResponse.getIntuitObject();
